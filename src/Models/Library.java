@@ -1,30 +1,32 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Library {
-	private List<Book> books;
+	private Map<String, Book> books;
 
 	public Library() {
-		this.books = new ArrayList<Book>();
+		this.books = new HashMap<>();
 	}
 
 	public void addBook(Book book) {
-		if (canAddBook(book)) {
-			books.add(book);
-			System.out.println("Book added successfully!");
-		} else {
+		if (books.containsKey(book.getIsbn())) {
 			System.out.println("Book with the same ISBN already exists.");
+		} else {
+			books.put(book.getIsbn(), book);
+			System.out.println("Book added successfully!");
 		}
 	}
 
-	private boolean canAddBook(Book book) {
-		return !books.contains(book);
-	}
-
 	public void listBooks() {
-		for (Book book : books)
-			System.out.println(book.toString());
+		if (books.isEmpty()) {
+			System.out.println("No books available in the library.");
+		} else {
+			System.out.println("Books available in the library :");
+			for (Book book : books.values()) {
+				System.out.println("\t" + book.toString());
+			}
+		}
 	}
 }
