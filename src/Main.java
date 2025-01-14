@@ -21,5 +21,7 @@ public class Main {
 		System.out.println();
 
 		library.listBooks();
+		library.removeBook(book1);
+		library.listBooks();
 	}
 }

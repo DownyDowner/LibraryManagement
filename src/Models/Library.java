@@ -19,6 +19,19 @@ public class Library {
 		}
 	}
 
+	public void removeBook(String isbn) {
+		if (books.containsKey(isbn)) {
+			books.remove(isbn);
+			System.out.println("Book removed successfully!");
+		} else {
+			System.out.println("Book with this ISBN (" + isbn + ") does not exist.");
+		}
+	}
+
+	public void removeBook(Book book) {
+		removeBook(book.getIsbn());
+	}
+
 	public void listBooks() {
 		if (books.isEmpty()) {
 			System.out.println("No books available in the library.");

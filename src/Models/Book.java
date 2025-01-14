@@ -15,6 +15,10 @@ public class Book {
 		this.publicationYear = publicationYear;
 	}
 
+	public String getIsbn() {
+		return isbn;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
