@@ -6,13 +6,13 @@ public class Book {
 	private final String title;
 	private final String author;
 	private final String isbn;
-	private final LocalDate publicationYear;
+	private final LocalDate publicationDate;
 
-	public Book(String title, String author, String isbn, LocalDate publicationYear) {
+	public Book(String title, String author, String isbn, LocalDate publicationDate) {
 		this.title = title;
 		this.author = author;
 		this.isbn = isbn;
-		this.publicationYear = publicationYear;
+		this.publicationDate = publicationDate;
 	}
 
 	public String getIsbn() {
@@ -31,6 +31,6 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return title + " - " + author + " (" + publicationYear.getYear() + ")";
+		return title + " - " + author + " (" + publicationDate.getYear() + ")";
 	}
 }
