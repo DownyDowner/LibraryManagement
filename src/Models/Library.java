@@ -42,4 +42,8 @@ public class Library {
 			}
 		}
 	}
+
+	public boolean canDeleteBook() {
+		return !books.isEmpty();
+	}
 }
