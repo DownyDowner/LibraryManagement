@@ -1,10 +1,13 @@
 package Models;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Library {
 	private Map<String, Book> books;
+	private final String saveFile = "library.csv";
 
 	public Library() {
 		this.books = new HashMap<>();
@@ -45,5 +48,28 @@ public class Library {
 
 	public boolean canDeleteBook() {
 		return !books.isEmpty();
+	}
+
+	public void save() {
+		try (FileWriter fileWriter = new FileWriter(saveFile)) {
+			fileWriter.append("ISBN,Title,Author,PublicationDate\n");
+			for (Book book : books.values()) {
+				fileWriter.append(escapeCsv(book.getIsbn())).append(",");
+				fileWriter.append(escapeCsv(book.getTitle())).append(",");
+				fileWriter.append(escapeCsv(book.getAuthor())).append(",");
+				fileWriter.append(escapeCsv(book.getPublicationDate().toString())).append("\n");
+			}
+			System.out.println("Save successfully");
+		} catch (IOException e) {
+			System.err.println("Error while saving the library");
+		}
+	}
+
+	private String escapeCsv(String value) {
+		if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+			value = value.replace("\"", "\"\"");
+			return "\"" + value + "\"";
+		}
+		return value;
 	}
 }

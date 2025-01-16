@@ -15,8 +15,20 @@ public class Book {
 		this.publicationDate = publicationDate;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
 	public String getIsbn() {
 		return isbn;
+	}
+
+	public LocalDate getPublicationDate() {
+		return publicationDate;
 	}
 
 	@Override

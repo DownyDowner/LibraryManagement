@@ -57,6 +57,7 @@ public class Main {
 					break;
 
 				case 4:
+					library.save();
 					isRunning = false;
 					break;
 
