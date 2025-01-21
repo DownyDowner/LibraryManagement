@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import Models.Book;
 
-class BookTest {
+public class BookTest {
 
 	@Test
 	void testConstructorAndGetters() {

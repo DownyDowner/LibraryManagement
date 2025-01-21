@@ -114,4 +114,17 @@ public class Library {
 		}
 		return value;
 	}
+
+	public Map<String, Book> getBooks() {
+		return books;
+	}
+
+	public boolean hasBook(String isbn) {
+		return books.containsKey(isbn);
+	}
+
+	public Book getBookByIsbn(String isbn) {
+		return books.get(isbn);
+	}
+
 }
