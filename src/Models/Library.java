@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class Library {
 	private Map<String, Book> books;
-	private static final String SAVE_FILE = "library.csv";
-	private static final String CSV_DELIMITER = ",";
+	public static final String SAVE_FILE = "library.csv";
+	public static final String CSV_DELIMITER = ",";
 
 	public Library() {
 		this.books = new HashMap<>();

@@ -24,7 +24,7 @@ public class LibraryTest {
 
 	@BeforeEach
 	void setUp() {
-		File file = new File("library.csv");
+		File file = new File(Library.SAVE_FILE);
 		if (file.exists()) {
 			file.delete();
 		}
@@ -122,7 +122,7 @@ public class LibraryTest {
 			fail("Test interrupted while waiting for save operations to complete.");
 		}
 
-		File file = new File("library.csv");
+		File file = new File(Library.SAVE_FILE);
 		assertTrue(file.exists(), "The save file should exist after concurrent save operations.");
 	}
 
