@@ -1,12 +1,17 @@
 package Tests;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,4 +92,38 @@ public class LibraryTest {
 		Book nonExistentBook = library.getBookByIsbn("NON_EXISTENT_ISBN");
 		assertNull(nonExistentBook, "Retrieving a book with a non-existent ISBN should return null.");
 	}
+
+	@Test
+	void testSaveSynchronization() {
+		Book book1 = new Book("Title1", "Author1", "ISBN001", LocalDate.of(2021, 1, 1));
+		Book book2 = new Book("Title2", "Author2", "ISBN002", LocalDate.of(2022, 2, 2));
+		library.addBook(book1);
+		library.addBook(book2);
+
+		ExecutorService executor = Executors.newFixedThreadPool(3);
+
+		for (int i = 0; i < 3; i++) {
+			executor.submit(() -> {
+				assertDoesNotThrow(() -> {
+					library.save();
+					System.out.println(Thread.currentThread().getName() + " - Save operation completed.");
+				}, "Save operation should not throw any exceptions.");
+			});
+		}
+
+		executor.shutdown();
+		try {
+			if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+				executor.shutdownNow();
+				fail("Timeout waiting for save operations to complete.");
+			}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			fail("Test interrupted while waiting for save operations to complete.");
+		}
+
+		File file = new File("library.csv");
+		assertTrue(file.exists(), "The save file should exist after concurrent save operations.");
+	}
+
 }
