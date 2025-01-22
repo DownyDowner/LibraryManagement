@@ -92,7 +92,7 @@ public class Library {
 		}
 	}
 
-	public void save() {
+	public synchronized void save() {
 		try (FileWriter fileWriter = new FileWriter(SAVE_FILE)) {
 			fileWriter.append("ISBN").append(CSV_DELIMITER).append("Title").append(CSV_DELIMITER).append("Author")
 					.append(CSV_DELIMITER).append("PublicationDate\n");
